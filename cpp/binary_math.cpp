@@ -101,11 +101,34 @@ int binaryMultiply(int a,int b){
     return num;
 }
 
+int binaryDivide(int a, int b){
+    bool is_negative = (a > 0) ^ (b > 0);  
+    if(a < 0)  a = -a;  
+    if(b < 0)  b = -b;  
+    if(a < b)  return 0;  
+
+    int divisor_move_bit = 0;   
+    for(divisor_move_bit = 0; divisor_move_bit < 32; divisor_move_bit++) {  
+        if((b << divisor_move_bit) >= a)
+            break; 
+    }  
+
+    int num = 0;  
+    for(; divisor_move_bit >= 0; divisor_move_bit--) {  
+
+      if((b << divisor_move_bit)>a) continue;
+
+        num |= (1 << divisor_move_bit);  
+        a -= (b << divisor_move_bit);  
+    }  
+
+    if(is_negative)  
+        return -num;  
+
+    return num;  
+}
+
 int main(){
-
-   
-
-   
 
     int a,b;
     cout << "Input int.a:";
@@ -120,6 +143,10 @@ int main(){
     cout << a << "-" << b << "=" << binarySubtract(a,b) << endl;
 
     cout << a << "x" << b << "=" << binaryMultiply(a,b) << endl;
+
+    cout << a << "/" << b << "=" << binaryDivide(a,b) << endl;
+
+   
     return 0;
 }
 
