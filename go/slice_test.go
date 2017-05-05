@@ -33,6 +33,8 @@ func TestSlice00(t *testing.T) {
 	sss := []int{1, 2, 3, 4, 5}
 	sss1 := sss[2:4]
 	t.Logf("len:%d cap:%d p:%v sss1:%v\n", len(sss1), cap(sss1), &sss1[0], sss1)
+	// output:
+	// len:2 cap:3 p:0xc42006eac0 sss1:[3 4]
 
 	//sss1[2] = 3333 // index out of range
 	sss1 = append(sss1, 3333)
