@@ -41,6 +41,9 @@ func TestSlice00(t *testing.T) {
 
 	t.Logf("len:%d cap:%d p:%v sss1:%v\n", len(sss1), cap(sss1), &sss1[0], sss1)
 	t.Logf("len:%d cap:%d p:%v sss:%v\n", len(sss), cap(sss), &sss[2], sss)
+	// output:
+	// len:4 cap:6 p:0xc42006eb10 sss1:[9999999999 4 3333 4444]
+	// len:5 cap:5 p:0xc42006eac0 sss:[1 2 3 4 3333]
 }
 
 func TestSlice0(t *testing.T) {
