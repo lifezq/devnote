@@ -13,9 +13,12 @@ LinkNode createLnode(int n){
 
     l = head;
 
-    while(n>=0){
+    while(n>0){
         LinkNode tmp = (LinkNode)malloc(sizeof(Lnode));
-        tmp->data = n;
+
+        cout << "Input node val(int):";
+        cin >> tmp->data;
+
         l->next = tmp;
 
         l = tmp;
@@ -59,7 +62,13 @@ void traverseNode(LinkNode n){
 
 int main(){
 
-    LinkNode n = createLnode(10);
+    int nlen;
+    cout << "Input linknode length:";
+    cin >> nlen;
+
+    LinkNode n = createLnode(nlen);
+
+    cout << "--------------------------------" << endl;
 
     traverseNode(n);
 
