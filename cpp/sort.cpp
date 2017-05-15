@@ -12,7 +12,11 @@ void insertSort(int *a, int n){
             int j=i-1,x;
             x=a[i];
 
-            while(x<a[j]) a[j+1] = a[j--];
+            while(x<a[j]){
+                a[j+1] = a[j];
+                j--;
+            }
+
             a[j+1] = x;
         }
     }
@@ -49,7 +53,7 @@ int main(){
     for(int i=0;i<10;i++) cout << arr[i] << ", ";
     cout << endl;
     cout << "----------------" << endl;
-    //quickSort(arr, 0, 10);
+    //quickSort(arr, 0, 9);
     insertSort(arr,10);
 
     cout << "after sort:--------------" << endl;
