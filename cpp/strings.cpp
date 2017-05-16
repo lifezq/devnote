@@ -100,6 +100,22 @@ int atoi_01(char* s){
     return sign*n;
 }
 
+void allPermutation(char* s, int from, int to){
+
+    if(from > to || to <= 1) return;
+
+    if(from == to){
+        for(int i=0;i<=to;i++) cout << s[i];
+        cout << endl;
+    }else{
+        for(int i=from;i<=to;i++){
+            swap(s[i], s[from]);
+            allPermutation(s, from+1, to);
+            swap(s[i], s[from]);
+        }
+    }
+}
+
 int main(){
 
     cout << "isPalindrome--------------------" << isPalindrome("madam", 5) << endl;
@@ -107,7 +123,10 @@ int main(){
 
     // reverseWord("hello world.", " ");
     cout << "atoi_01--" << ((atoi_01("   +12345") == 12345) &&  (atoi_01("     -12345") == -12345)) << endl;
-    cout << "INT_MAX:" << atoi_01("  1233424235345344") << " INT_MIN:" << atoi_01("   -347289489398549");
+    cout << "INT_MAX:" << atoi_01("  1233424235345344") << " INT_MIN:" << atoi_01("   -347289489398549") << endl;
+
+    char s0[3] = {'a', 'b', 'c'};
+    allPermutation(s0, 0 ,2);
     return 0;
 }
 
