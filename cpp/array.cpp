@@ -27,7 +27,7 @@ void threeSum(int arr[], int len){
     sort(arr, arr+len);
 
     int second,end,sum;
-    for(int first;first<len-2;first++){
+    for(int first=0;first<len-2;first++){
 
         second = first+1;
         end=len-1;
@@ -144,6 +144,34 @@ void oddEvenSort(int arr[], unsigned int len){
     }
 }
 
+void dutchFlag(int arr[], int len){
+    int *begin=arr;
+    int *cur=arr;
+    int *end=arr+len-1;
+    while(cur<=end){
+        if(*cur==0){
+            if(*cur!=*begin){
+                *cur^=*begin;
+                *begin^=*cur;
+                *cur^=*begin;
+            }
+
+            cur++;
+            begin++;
+        }else if(*cur==1){
+            cur++;
+        }else{
+            if(*cur!=*end){
+                *cur^=*end;
+                *end^=*cur;
+                *cur^=*end;
+            }
+
+            end--;
+        }
+    }
+}
+
 int main(){
     int arr[10] = {-20,-18,-15,17,10,16,8,13,5,7};
 
@@ -154,9 +182,16 @@ int main(){
     //cout << "Fibonacci(5):" << Fibonacci(5) << endl;
     //cout << "ClimbStairs(5):" << ClimbStairs(5) << endl;
 
-    oddEvenSort(arr,10);
-    for(int i=0;i<10;i++) cout << arr[i] << " ";
-    cout << endl;
+    //oddEvenSort(arr,10);
+    
+    srand(time(0));
+    for(int i=0;i<20;i++){
+        for(int j=0;j<10;j++) arr[j]=rand()%3;
+        dutchFlag(arr, 10);
+        for(int i=0;i<10;i++) cout << arr[i] << " ";
+        cout << endl;
+    }
+
 
     return 0;
 }
