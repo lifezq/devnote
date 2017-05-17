@@ -3,7 +3,7 @@
 #include<stdio.h>
 using namespace std;
 
-void twoSum(int arr[], unsigned int len, int sum){
+void twoSum(int *arr, unsigned int len, int sum){
     sort(arr, arr+len);
     int begin = 0, end = len-1;
     while(begin < end){
@@ -22,7 +22,7 @@ void twoSum(int arr[], unsigned int len, int sum){
     }
 }
 
-void threeSum(int arr[], int len){
+void threeSum(int *arr, int len){
 
     sort(arr, arr+len);
 
@@ -54,7 +54,7 @@ void threeSum(int arr[], int len){
     }
 }
 
-void fourSum(int arr[], int len){
+void fourSum(int *arr, int len){
 
     sort(arr, arr+len);
 
@@ -85,7 +85,7 @@ void fourSum(int arr[], int len){
     }
 }
 
-int maxSub(int arr[], int len){
+int maxSub(int *arr, int len){
     if(len<1) return 0;
 
     int currSum=0,maxSum=arr[0];
@@ -123,7 +123,7 @@ bool isOddNumber(int n){
     return (n&0x01)==0x01;
 }
 
-void oddEvenSort(int arr[], unsigned int len){
+void oddEvenSort(int *arr, unsigned int len){
     if(arr == NULL || len == 0) return;
 
     int *begin = arr;
@@ -144,7 +144,7 @@ void oddEvenSort(int arr[], unsigned int len){
     }
 }
 
-void dutchFlag(int arr[], int len){
+void dutchFlag(int *arr, int len){
     int *begin=arr;
     int *cur=arr;
     int *end=arr+len-1;
