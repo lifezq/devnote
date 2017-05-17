@@ -98,10 +98,65 @@ int maxSub(int arr[], int len){
     return maxSum;
 }
 
+long long Fibonacci(unsigned int n){
+    int result[3] = {0, 1, 2};
+    if (n <= 2) return result[n];
+
+    return Fibonacci(n - 1) + Fibonacci(n - 2);
+}
+
+//1, 1, 2, 3, 5, 8, 13, 21..
+int ClimbStairs(int n){
+    int dp[3] = { 1, 1  };
+    if (n < 2) return 1;
+    
+    for (int i = 2; i <= n; i++){
+        dp[2] = dp[0] + dp[1];
+        dp[0] = dp[1];
+        dp[1] = dp[2];
+    }
+                    
+    return dp[2];
+}
+
+bool isOddNumber(int n){
+    return (n&0x01)==0x01;
+}
+
+void oddEvenSort(int arr[], unsigned int len){
+    if(arr == NULL || len == 0) return;
+
+    int *begin = arr;
+    int *end = arr+len-1;
+
+    while(begin<end){
+
+        while(isOddNumber(*begin)) begin++;
+        while(!isOddNumber(*end)) end--;
+        if(begin<end){
+            int temp = *begin;
+            *begin=*end;
+            *end = temp;
+        }
+
+        begin++;
+        end--;
+    }
+}
+
 int main(){
     int arr[10] = {-20,-18,-15,17,10,16,8,13,5,7};
+
     //    twoSum(arr, 10, 20);
     //threeSum(arr, 10);
     //fourSum(arr, 10);
-    cout << "maxSub:" << maxSub(arr,10) << endl;
+    //cout << "maxSub:" << maxSub(arr,10) << endl;
+    //cout << "Fibonacci(5):" << Fibonacci(5) << endl;
+    //cout << "ClimbStairs(5):" << ClimbStairs(5) << endl;
+
+    oddEvenSort(arr,10);
+    for(int i=0;i<10;i++) cout << arr[i] << " ";
+    cout << endl;
+
+    return 0;
 }
