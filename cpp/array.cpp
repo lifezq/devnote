@@ -134,9 +134,9 @@ void oddEvenSort(int arr[], unsigned int len){
         while(isOddNumber(*begin)) begin++;
         while(!isOddNumber(*end)) end--;
         if(begin<end){
-            int temp = *begin;
-            *begin=*end;
-            *end = temp;
+            *begin^=*end;
+            *end^=*begin;
+            *begin^=*end;
         }
 
         begin++;
