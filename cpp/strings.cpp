@@ -69,6 +69,15 @@ void reverseWord(char* s, char* delim){
     cout << endl;
 }
 
+void reverseString(char* str, int from, int to){
+    int t;
+    for(;from<to;from++,to--){
+        t=str[from];
+        str[from]=str[to];
+        str[to]=t;
+    }
+}
+
 int atoi_01(char* s){
 
     if(NULL == s) return 0;
@@ -127,6 +136,14 @@ int main(){
 
     char s0[3] = {'a', 'b', 'c'};
     allPermutation(s0, 0 ,2);
+
+    char str[17]={'p','r','o','g','r','a','m',' ', 'l','a','n','g','u','a','g','e'};
+    cout<< "str:" << str << " sl:" << sizeof(str) << " l:" << sizeof(char) << endl;
+    for(int i=0;i<17;i++) cout <<  str[i];
+    cout << endl;
+    reverseString(str,0, 16);
+    for(int i=0;i<17;i++) cout <<  str[i];
+    cout << endl;
     return 0;
 }
 
