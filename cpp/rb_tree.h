@@ -1,3 +1,5 @@
+#ifndef _RB_TREE_H
+#define _RB_TREE_H
 #include <iostream>
 use namespace std;
 
@@ -46,6 +48,12 @@ class RB_Tree{
         }
         void Insert(TreeNode *n);
         void InsertFixup(TreeNode *n);
+        void LeftRotate(TreeNode *n);
+        void RightRotate(TreeNode *n);
+        TreeNode* Delete(TreeNode *n);
+        void DeleteFixup(TreeNode *n);
     private:
         TreeNode* root;
 };
+
+#endif
