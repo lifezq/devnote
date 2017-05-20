@@ -172,6 +172,10 @@ void dutchFlag(int *arr, int len){
     }
 }
 
+bool isEqual(int a, int b){
+    return ((a|b)&b) == a;
+}
+
 int main(){
     int arr[10] = {-20,-18,-15,17,10,16,8,13,5,7};
 
@@ -192,6 +196,7 @@ int main(){
         cout << endl;
     }
 
+    //cout << "====:" << isEqual(10,110) << endl;
 
     return 0;
 }

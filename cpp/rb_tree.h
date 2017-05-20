@@ -1,7 +1,7 @@
 #ifndef _RB_TREE_H
 #define _RB_TREE_H
 #include <iostream>
-use namespace std;
+using namespace std;
 
 /*--红黑树五性质:-----------------------------------------------------------------
  *  1. 每个结点要么是红的，要么是黑的。
@@ -16,9 +16,10 @@ enum RB_Color {RED, BLACK};
 class TreeNode{
         friend class RB_Tree;
     public:
+        int data;
         TreeNode(): data(0), color(BLACK), parent(NULL), lchild(NULL), rchild(NULL){}
         TreeNode(int x): data(x), color(BLACK), parent(NULL), lchild(NULL), rchild(NULL){}
-        TreeNode(const TreeNode &n){
+        TreeNode(const TreeNode* n){
             data=n->data;
             color=n->color;
             parent=n->parent;
@@ -31,7 +32,6 @@ class TreeNode{
             rchild=NULL;
         }
     private:
-        int data;
         RB_Color color;
         TreeNode *parent;
         TreeNode *lchild;
@@ -40,8 +40,11 @@ class TreeNode{
 
 class RB_Tree{
     public:
+        TreeNode* root;
+        TreeNode* nil_t;
         RB_Tree(){
-            root=new TreeNode();
+            root=NULL;
+            cout << "#001 " << (root==NULL) << " "  << endl;
         }
         ~RB_Tree(){
             root=NULL;
@@ -52,8 +55,10 @@ class RB_Tree{
         void RightRotate(TreeNode *n);
         TreeNode* Delete(TreeNode *n);
         void DeleteFixup(TreeNode *n);
+        TreeNode* TreeSuccessor(TreeNode *n);
+        TreeNode* TreeMinimum(TreeNode *n);
+        void InorderTravel(TreeNode* n);
     private:
-        TreeNode* root;
 };
 
 #endif
