@@ -1,39 +1,36 @@
 #include "rb_tree.h"
+#include <stack>
 
 
 void RB_Tree::Insert(TreeNode* z){
 
-    cout << "#007.1 " << z->data << endl;
 
     TreeNode* y = NULL;
     TreeNode* x = root;
     while(x!=NULL){
         y=x;
-        if(z->data<x->data) x=x->lchild;
 
-        if(x!=NULL && z->data>x->data) x=x->rchild;
+        if(z->data<x->data) 
+            x=x->lchild;
+        else if(z->data>x->data) 
+            x=x->rchild;
     }
 
-    cout << "#007.3 " << z->data  << "=="  << endl;
 
     z->parent=y;
 
     if(NULL==y){
         root=z;
-        cout << "#006.0 " << z->data << endl;
-        cout << "#006.1 " << root->data << endl;
     }else if(z->data<y->data){
         y->lchild=z;
     }else{
         y->rchild=z;
     }
 
-    cout << "#007.0 " << z->data << endl;
     z->lchild=NULL;
     z->rchild=NULL;
     z->color = RED;
 
-    cout << "#002:" << z->data << endl;
     InsertFixup(z);
 }
 
@@ -48,19 +45,16 @@ void RB_Tree::InsertFixup(TreeNode* z){
 
     if(z->parent==NULL){
         root->color=BLACK;
-        cout << "#005---:" << z->data << "ddd" << root->data << "--" << (root==NULL)<< endl;
         return;
     }
 
     while(z->parent!=NULL && z->parent->color==RED){
 
-        cout << "#005.1:" << z->data << endl;
 
         if(z->parent==z->parent->parent->lchild){
 
 
             y=z->parent->parent->rchild;
-            cout << "#005.2:" << z->data<<"--" << y << endl;
 
             if(y!=NULL && y->color==RED){ // case 1
                 z->parent->color=BLACK;
@@ -74,6 +68,7 @@ void RB_Tree::InsertFixup(TreeNode* z){
                     z=z->parent;
                     LeftRotate(z);
                 }
+
                 // case 3
                 z->parent->color=BLACK;
                 z->parent->parent->color=RED;
@@ -93,6 +88,7 @@ void RB_Tree::InsertFixup(TreeNode* z){
                     RightRotate(z);
                 }
 
+
                 z->parent->color=BLACK;
                 z->parent->parent->color=RED;
                 LeftRotate(z->parent->parent);
@@ -101,11 +97,9 @@ void RB_Tree::InsertFixup(TreeNode* z){
     }
 
     root->color=BLACK;
-    cout << "#005.3:" << z->data << endl;
 }
 
 void RB_Tree::LeftRotate(TreeNode* x){
-    cout << "#003:" << x->data << endl;
     TreeNode* y=x->rchild;
     x->rchild=y->lchild;
     if(y->lchild!=NULL){
@@ -122,7 +116,6 @@ void RB_Tree::LeftRotate(TreeNode* x){
 }
 
 void RB_Tree::RightRotate(TreeNode* x){
-    cout << "#004:" << x->data << endl;
     TreeNode* y=x->lchild;
     x->lchild=y->rchild;
     if(y->rchild!=NULL){
@@ -224,16 +217,31 @@ void RB_Tree::InorderTravel(TreeNode* n){
 
     if(NULL == n) return;
 
-        cout << " root node:" << n->data << endl;
+        cout <<  n->data << "(" << n->color << ") ";
 
     if(n->lchild){
-        cout << " left node:" << n->lchild->data << endl;
         InorderTravel(n->lchild);
     }
 
     if(n->rchild){
-        cout << " right node:" << n->rchild->data << endl;
         InorderTravel(n->rchild);
+    }
+}
+
+void RB_Tree::InOrderTraverse(){
+    stack<TreeNode*> stk;
+    TreeNode* p = root;
+    while(p!=NULL || !stk.empty()){
+        while(p!=NULL){
+            stk.push(p);
+            p=p->lchild;
+        }
+
+        if(!stk.empty()){
+            cout << stk.top()->data << "(" << stk.top()->color << ")" << " ";
+            p=stk.top()->rchild;
+            stk.pop();
+        }
     }
 }
 
@@ -243,6 +251,9 @@ int main(){
     RB_Tree rb =  RB_Tree();
     for(int i=0;i<20;i++) rb.Insert(new TreeNode(arr[i]));
 
+    rb.InOrderTraverse();
+    cout << endl;
     rb.InorderTravel(rb.root);
+    cout << endl;
     return 0;
 }

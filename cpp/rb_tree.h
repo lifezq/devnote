@@ -44,7 +44,6 @@ class RB_Tree{
         TreeNode* nil_t;
         RB_Tree(){
             root=NULL;
-            cout << "#001 " << (root==NULL) << " "  << endl;
         }
         ~RB_Tree(){
             root=NULL;
@@ -58,6 +57,7 @@ class RB_Tree{
         TreeNode* TreeSuccessor(TreeNode *n);
         TreeNode* TreeMinimum(TreeNode *n);
         void InorderTravel(TreeNode* n);
+        void InOrderTraverse();
     private:
 };
 
