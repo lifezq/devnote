@@ -144,7 +144,7 @@ TreeNode* RB_Tree::Delete(TreeNode* z){
     else y=TreeSuccessor(z);
 
     if(y->lchild != NULL) x=y->lchild;
-    else x=y->rchild;
+    else if(y->rchild!=NULL) x=y->rchild;
 
     x->parent=y->parent;
     if(y->parent == NULL) root=x;
@@ -179,16 +179,47 @@ void RB_Tree::DeleteFixup(TreeNode* x){
             if(y->lchild->color==BLACK && y->rchild->color==BLACK){ // case 2
                 y->color=RED;
                 x=x->parent;
-            }else if(y->rchild->color==BLACK){// case 3
-                y->rchild->color=BLACK;
-                y->color=RED;
-                RightRotate(y);
-                y=x->parent->rchild;
-            }else{// case 4
+            }else{
+
+                if( y->lchild->color== RED && y->rchild->color==BLACK){// case 3
+                    y->lchild->color=BLACK;
+                    y->color=RED;
+                    RightRotate(y);
+                    y=x->parent->rchild;
+                }
+                // case 4
                 y->color=x->parent->color;
                 x->parent->color=BLACK;
                 y->rchild->color=BLACK;
                 LeftRotate(x->parent);
+                x=root;
+            }
+        }else{
+            y=x->parent->lchild;
+            if(y->color==RED){
+                y->color=BLACK;
+                x->parent->color=RED;
+                RightRotate(x->parent);
+                y=x->parent->lchild;
+            }
+
+            if(y->lchild->color == BLACK && y->rchild->color==BLACK){
+                y->color=RED;
+                x=x->parent;
+
+            }else{
+
+                if(y->lchild->color==BLACK){
+                    y->color=RED;
+                    y->rchild->color=BLACK;
+                    LeftRotate(y);
+                    y=x->parent->lchild;
+                }
+
+                y->color=x->parent->color;
+                x->parent->color=BLACK;
+                y->lchild->color=BLACK;
+                RightRotate(x->parent);
                 x=root;
             }
         }
@@ -199,6 +230,7 @@ void RB_Tree::DeleteFixup(TreeNode* x){
 
 TreeNode* RB_Tree::TreeSuccessor(TreeNode* x){
     if(x->rchild!=NULL) return TreeMinimum(x->rchild);
+
     TreeNode* y=x->parent;
     while(y!=NULL && x==y->rchild){
         x=y;
@@ -210,6 +242,7 @@ TreeNode* RB_Tree::TreeSuccessor(TreeNode* x){
 
 TreeNode* RB_Tree::TreeMinimum(TreeNode* x){
     while(x->lchild!=NULL) x=x->lchild;
+    if(x->lchild==NULL&&x->rchild==NULL) return x->parent;
     return x;
 }
 
