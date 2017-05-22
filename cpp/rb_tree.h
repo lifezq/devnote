@@ -56,7 +56,7 @@ class RB_Tree{
         void DeleteFixup(TreeNode *n);
         TreeNode* TreeSuccessor(TreeNode *n);
         TreeNode* TreeMinimum(TreeNode *n);
-        void InorderTravel(TreeNode* n);
+        void Traverse(TreeNode* n, int order);
         void InOrderTraverse();
     private:
 };

@@ -246,19 +246,26 @@ TreeNode* RB_Tree::TreeMinimum(TreeNode* x){
     return x;
 }
 
-void RB_Tree::InorderTravel(TreeNode* n){
+void RB_Tree::Traverse(TreeNode* n, int order){
 
     if(NULL == n) return;
 
-        cout <<  n->data << "(" << n->color << ") ";
+    // pre
+    if(order==-1) cout <<  n->data << "(" << n->color << ") ";
 
     if(n->lchild){
-        InorderTravel(n->lchild);
+        Traverse(n->lchild, order);
     }
 
+    // in
+    if(order==0) cout <<  n->data << "(" << n->color << ") ";
+
     if(n->rchild){
-        InorderTravel(n->rchild);
+        Traverse(n->rchild, order);
     }
+
+    // beh
+    if(order==1) cout <<  n->data << "(" << n->color << ") ";
 }
 
 void RB_Tree::InOrderTraverse(){
@@ -278,6 +285,13 @@ void RB_Tree::InOrderTraverse(){
     }
 }
 
+/*-----------------------------------------------------------------------------
+ *                                            9
+ *                                4                             14
+ *                          1          6                12               18
+ *                      0     2      5   7           11    13       16        19 
+ *                              3          8      10              15  17
+ *-----------------------------------------------------------------------------*/
 int main(){
 
     int arr[20]={12,1,9,2,0,11,7,19,4,15,18,5,14,13,10,16,6,3,8,17};
@@ -286,7 +300,17 @@ int main(){
 
     rb.InOrderTraverse();
     cout << endl;
-    rb.InorderTravel(rb.root);
+
+    cout << "pre:" << endl;
+    rb.Traverse(rb.root, -1);
+    cout << endl;
+
+    cout << "in:" << endl;
+    rb.Traverse(rb.root, 0);
+    cout << endl;
+
+    cout << "beh:" << endl;
+    rb.Traverse(rb.root, 1);
     cout << endl;
     return 0;
 }
