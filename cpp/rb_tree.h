@@ -16,7 +16,6 @@ enum RB_Color {RED, BLACK};
 class TreeNode{
         friend class RB_Tree;
     public:
-        int data;
         TreeNode(): data(0), color(BLACK), parent(NULL), lchild(NULL), rchild(NULL){}
         TreeNode(int x): data(x), color(BLACK), parent(NULL), lchild(NULL), rchild(NULL){}
         TreeNode(const TreeNode* n){
@@ -32,6 +31,7 @@ class TreeNode{
             rchild=NULL;
         }
     private:
+        int data;
         RB_Color color;
         TreeNode *parent;
         TreeNode *lchild;
@@ -48,18 +48,18 @@ class RB_Tree{
             root=NULL;
         }
         void Insert(TreeNode *n);
-        void InsertFixup(TreeNode *n);
-        void LeftRotate(TreeNode *n);
-        void RightRotate(TreeNode *n);
-        TreeNode* Delete(TreeNode *n);
         TreeNode* Delete(int data);
-        void DeleteFixup(TreeNode *n);
-        TreeNode* TreeSuccessor(TreeNode *n);
-        TreeNode* TreeMinimum(TreeNode *n);
+        TreeNode* Delete(TreeNode *n);
         void Traverse(TreeNode* n, int order);
         void InOrderTraverse();
         TreeNode* Search(TreeNode* n, int data);
     private:
+        void InsertFixup(TreeNode *n);
+        void LeftRotate(TreeNode *n);
+        void RightRotate(TreeNode *n);
+        void DeleteFixup(TreeNode *n);
+        TreeNode* TreeSuccessor(TreeNode *n);
+        TreeNode* TreeMinimum(TreeNode *n);
 };
 
 #endif
