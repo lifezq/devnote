@@ -41,7 +41,6 @@ class TreeNode{
 class RB_Tree{
     public:
         TreeNode* root;
-        TreeNode* nil_t;
         RB_Tree(){
             root=NULL;
         }
