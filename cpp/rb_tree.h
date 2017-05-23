@@ -53,11 +53,13 @@ class RB_Tree{
         void LeftRotate(TreeNode *n);
         void RightRotate(TreeNode *n);
         TreeNode* Delete(TreeNode *n);
+        TreeNode* Delete(int data);
         void DeleteFixup(TreeNode *n);
         TreeNode* TreeSuccessor(TreeNode *n);
         TreeNode* TreeMinimum(TreeNode *n);
         void Traverse(TreeNode* n, int order);
         void InOrderTraverse();
+        TreeNode* Search(TreeNode* n, int data);
     private:
 };
 

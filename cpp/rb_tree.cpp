@@ -50,6 +50,7 @@ void RB_Tree::InsertFixup(TreeNode* z){
 
     while(z->parent!=NULL && z->parent->color==RED){
 
+        if(NULL == z->parent->parent) break;
 
         if(z->parent==z->parent->parent->lchild){
 
@@ -139,15 +140,17 @@ void RB_Tree::RightRotate(TreeNode* x){
  *-----------------------------------------------------------------------------*/
 TreeNode* RB_Tree::Delete(TreeNode* z){
     TreeNode* y;
-    TreeNode* x;
+    TreeNode* x=NULL;
     if(z->lchild == NULL || z->rchild == NULL) y=z;
     else y=TreeSuccessor(z);
 
     if(y->lchild != NULL) x=y->lchild;
     else if(y->rchild!=NULL) x=y->rchild;
 
-    x->parent=y->parent;
+    if(NULL != x) x->parent=y->parent;
+
     if(y->parent == NULL) root=x;
+
     else if(y==y->parent->lchild) y->parent->lchild=x;
     else y->parent->rchild=x;
 
@@ -158,6 +161,18 @@ TreeNode* RB_Tree::Delete(TreeNode* z){
     return y;
 }
 
+TreeNode* RB_Tree::Delete(int data){
+    return Delete(Search(root, data));
+}
+
+TreeNode* RB_Tree::Search(TreeNode* n, int data){
+    if(data==n->data) return n;
+
+    if(data<n->data) return Search(n->lchild, data);
+
+    return Search(n->rchild, data);
+}
+
 /*-----------------------------------------------------------------------------
  *  1. 当前结点是黑+黑且兄弟结点为红色(此时父结点和兄弟结点的子结点分为黑)
  *  2. 当前结点是黑加黑且兄弟是黑色且兄弟结点的两个子结点全为黑色
@@ -166,8 +181,14 @@ TreeNode* RB_Tree::Delete(TreeNode* z){
  *     兄弟结点左子的颜色任意
  *-----------------------------------------------------------------------------*/
 void RB_Tree::DeleteFixup(TreeNode* x){
+
+    if(NULL == x) return;
+
     TreeNode* y;
     while(x!=root && x->color==BLACK){
+
+        if(NULL == x->parent) break;
+
         if(x==x->parent->lchild){
             y=x->parent->rchild;
             if(y->color==RED){// case 1
@@ -176,6 +197,9 @@ void RB_Tree::DeleteFixup(TreeNode* x){
                 LeftRotate(x->parent);
                 y=x->parent->rchild;
             }
+
+            if(NULL == y->lchild && NULL == y->rchild) break;
+
             if(y->lchild->color==BLACK && y->rchild->color==BLACK){ // case 2
                 y->color=RED;
                 x=x->parent;
@@ -195,6 +219,7 @@ void RB_Tree::DeleteFixup(TreeNode* x){
                 x=root;
             }
         }else{
+
             y=x->parent->lchild;
             if(y->color==RED){
                 y->color=BLACK;
@@ -202,6 +227,8 @@ void RB_Tree::DeleteFixup(TreeNode* x){
                 RightRotate(x->parent);
                 y=x->parent->lchild;
             }
+
+            if(NULL == y->lchild && NULL == y->rchild) break;
 
             if(y->lchild->color == BLACK && y->rchild->color==BLACK){
                 y->color=RED;
@@ -242,7 +269,6 @@ TreeNode* RB_Tree::TreeSuccessor(TreeNode* x){
 
 TreeNode* RB_Tree::TreeMinimum(TreeNode* x){
     while(x->lchild!=NULL) x=x->lchild;
-    if(x->lchild==NULL&&x->rchild==NULL) return x->parent;
     return x;
 }
 
@@ -312,5 +338,6 @@ int main(){
     cout << "beh:" << endl;
     rb.Traverse(rb.root, 1);
     cout << endl;
+
     return 0;
 }
