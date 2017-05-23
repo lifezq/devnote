@@ -139,13 +139,12 @@ void RB_Tree::RightRotate(TreeNode* x){
  *     结点的位置，就可以保证结构的不变。
  *-----------------------------------------------------------------------------*/
 TreeNode* RB_Tree::Delete(TreeNode* z){
-    TreeNode* y;
-    TreeNode* x=NULL;
+    TreeNode* x, *y;
     if(z->lchild == NULL || z->rchild == NULL) y=z;
     else y=TreeSuccessor(z);
 
     if(y->lchild != NULL) x=y->lchild;
-    else if(y->rchild!=NULL) x=y->rchild;
+    else x=y->rchild;
 
     if(NULL != x) x->parent=y->parent;
 
