@@ -14,12 +14,12 @@
 int main(){
 
     struct sockaddr_in addr;
-    int addr_len = sizeof(struct sockaddr_in);
+    int addr_len=sizeof(sockaddr_in);
     char buffer[256];
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if(sockfd<0){
-        perror("socket error:");
+        perror("Socket error:");
         exit(1);
     }
 
@@ -30,7 +30,7 @@ int main(){
     addr.sin_port = htons(SRV_PORT);
     addr.sin_addr.s_addr=htonl(INADDR_ANY);
 
-    if(bind(sockfd, (const sockaddr*)&addr, sizeof(addr))){
+    if(bind(sockfd, (const sockaddr*)&addr, sizeof(struct sockaddr_in))){
         perror("bind");
         exit(1);
     }
@@ -64,14 +64,13 @@ int main(){
                         continue;
                     }
 
-                    // write(newsockfd, SERVER_HELLO, sizeof(SERVER_HELLO));
                     time_t timep;
                     time(&timep);
-                    char t[50];
-                    bzero(t, sizeof(t));
-                    strcat(t, SERVER_HELLO);
-                    strcat(t,  asctime(gmtime(&timep)));
-                    write(newsockfd, t, strlen(t));
+                    char srv_hello[50];
+                    bzero(srv_hello, sizeof(srv_hello));
+                    strcat(srv_hello, SERVER_HELLO);
+                    strcat(srv_hello,  asctime(gmtime(&timep)));
+                    write(newsockfd, srv_hello, sizeof(srv_hello));
 
                     is_connected[newsockfd]=1;
                     
@@ -80,11 +79,13 @@ int main(){
 
 
                     bzero(buffer, sizeof(buffer));
-                    if(read(fd, buffer, sizeof(buffer))<0 || strlen(buffer)==0){
-                        printf("Connect closed\n");
+                    if(read(fd, buffer, sizeof(buffer))<0 || sizeof(buffer)==0){
+                        printf("Client[%d] Connection closed\n", fd);
                         is_connected[fd]=0;
                         close(fd);
                     }else{
+
+                        printf("Recved Client[%d]: %s", fd, buffer);
 
                         char buf[30];
                         sprintf(buf, "Client[%d] Message received.\n", fd);
