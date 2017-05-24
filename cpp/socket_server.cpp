@@ -14,7 +14,7 @@
 int main(){
 
     struct sockaddr_in addr;
-    int addr_len=sizeof(sockaddr_in);
+    int addr_len = sizeof(struct sockaddr_in);
     char buffer[256];
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -79,19 +79,20 @@ int main(){
 
 
                     bzero(buffer, sizeof(buffer));
-                    if(read(fd, buffer, sizeof(buffer))<0 || sizeof(buffer)==0){
+                    if(read(fd, buffer, sizeof(buffer))<0 || strlen(buffer)==0){
                         printf("Client[%d] Connection closed\n", fd);
                         is_connected[fd]=0;
                         close(fd);
                     }else{
 
-                        printf("Recved Client[%d]: %s", fd, buffer);
+
+                        if(strlen(buffer) && buffer[0]!='\n') printf("Recved Client[%d]: %s", fd, buffer);
 
                         char buf[30];
-                        sprintf(buf, "Client[%d] Message received.\n", fd);
-                        if(send(fd, buf, sizeof(buf), 0 )<0){
-                            perror("S received.\n");
-                        }
+                        bzero(buf, sizeof(buf));
+                        if(strlen(buffer) && buffer[0]!='\n') sprintf(buf, "Client[%d] Message received.\n", fd);
+
+                        if(send(fd, buf, sizeof(buf), 0 )<0)  perror("S received.\n");
                     }
                 }
             }
