@@ -75,7 +75,7 @@ int main(int argc, char **argv){
 
                     if(newsockfd > maxConn){
                         bzero(buf, sizeof(buf));
-                        sprintf(buf, "Too many connections.\n", newsockfd);
+                        sprintf(buf, "Too many connections.\n");
                         send(newsockfd, buf, sizeof(buf), 0 );
                         shutdown(newsockfd, SHUT_RDWR);
                         continue;
