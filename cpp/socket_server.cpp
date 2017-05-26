@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv){
 
-    if(argc<=1){
+    if(argc==1){
         printf("Usage:\n");
         printf("Cmd [port(default:%d)] [max conn(default:%d)]\n\n", SRV_PORT, SRV_MAX_CONN);
     }

@@ -12,7 +12,7 @@
 
 int main(int argc, char **argv){
 
-    if(argc<=1){
+    if(argc==1){
         printf("Cmd [host(default:%s)] [port(default:%d)]\n\n", SRV_HOST, SRV_PORT);
     }
 
