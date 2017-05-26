@@ -11,13 +11,13 @@
 
 #define SRV_PORT ((int)8888)
 #define SRV_HELLO "Welcome to server! "
-#define SRV_MAX_CONN ((int)5)
+#define SRV_MAX_CONN ((int)1<<10) /* Limited by system max open files */
 
 int main(int argc, char **argv){
 
     if(argc<=1){
         printf("Usage:\n");
-        printf("Cmd [port(default:8888)] [max conn(default:2)]\n\n");
+        printf("Cmd [port(default:%d)] [max conn(default:%d)]\n\n", SRV_PORT, SRV_MAX_CONN);
     }
 
     int port=argc>=2?atoi(argv[1]):SRV_PORT;
@@ -50,14 +50,14 @@ int main(int argc, char **argv){
         exit(1);
     }
 
-    if(listen(sockfd, 1<<7)){
+    if(listen(sockfd, 1<<9)){
         perror("listen");
         exit(1);
     }
 
     printf("Listen on port:%d\n", port);
 
-    struct pollfd pfds[maxConn];
+    struct pollfd pfds[maxConn+1];
 
     pfds[0].fd=sockfd;
     pfds[0].events=POLLIN;

@@ -10,13 +10,13 @@
 
 #define SRV_PORT ((int)8888)
 #define SRV_HELLO "Welcome to server! "
-#define SRV_MAX_CONN ((int)2)
+#define SRV_MAX_CONN ((int)(1<<10)-4) /* select: max support[1024] - Here max (1<<10)-4 on Mac */
 
 int main(int argc, char **argv){
 
     if(argc<=1){
         printf("Usage:\n");
-        printf("Cmd [port(default:8888)] [max conn(default:2)]\n\n");
+        printf("Cmd [port(default:%d)] [max conn(default:%d)]\n\n", SRV_PORT, SRV_MAX_CONN);
     }
 
     int port=argc>=2?atoi(argv[1]):SRV_PORT;
@@ -44,7 +44,7 @@ int main(int argc, char **argv){
         exit(1);
     }
 
-    if(listen(sockfd, maxConn)){
+    if(listen(sockfd, 1<<9)){
         perror("listen");
         exit(1);
     }
