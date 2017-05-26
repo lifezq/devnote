@@ -7,9 +7,17 @@
 #include <unistd.h>
 #include <string.h>
 
-#define SRV_PORT 8888
+#define SRV_HOST "127.0.0.1"
+#define SRV_PORT ((int)8888)
 
-int main(){
+int main(int argc, char **argv){
+
+    if(argc<=1){
+        printf("Cmd [host(default:%s)] [port(default:%d)]\n\n", SRV_HOST, SRV_PORT);
+    }
+
+    const char *host=(argc>=2)?argv[1]:SRV_HOST;
+    int port=(argc>=3)?atoi(argv[2]):SRV_PORT;
 
     struct sockaddr_in addr;
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -20,8 +28,8 @@ int main(){
 
     bzero(&addr, sizeof(addr));
     addr.sin_family=AF_INET;
-    addr.sin_port=htons(SRV_PORT);
-    addr.sin_addr.s_addr=htonl(INADDR_ANY);
+    addr.sin_port=htons(port);
+    inet_aton(host, &addr.sin_addr);
 
     if(connect(sockfd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in))){
         perror("Connect");
