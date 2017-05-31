@@ -76,12 +76,11 @@ int main(int argc, char **argv){
         exit(1);
     }
 
-    int curfds=1, newsockfd;
+    int curfds=1, epfds, newsockfd;
 
     while(true){
    
-        int epfds=epoll_wait(epfd, ep_events, curfds, 0);
-        if(epfds<=0) continue;
+        if((epfds=epoll_wait(epfd, ep_events, curfds, -1))<=0) continue;
 
         for(int i=0;i<epfds;i++){
 
