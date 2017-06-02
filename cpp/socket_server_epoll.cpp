@@ -12,7 +12,7 @@
 
 #define SRV_PORT ((int)8888)
 #define SRV_HELLO "Welcome to server! "
-#define SRV_MAX_CONN ((int)1<<10) /* Limited by system max open files */
+#define SRV_MAX_CONN ((int)1<<10) /* UnLimited */
 
 int main(int argc, char **argv){
 
