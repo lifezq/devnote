@@ -1,5 +1,5 @@
-#include<map>
-#include<iostream>
+#include <map>
+#include <iostream>
 
 using namespace std;
 
@@ -34,7 +34,15 @@ using namespace std;
 0000 1000
 */
 
+// 异或：
+//     1. 任何数异或1，取反。常用于把某位取反
+//     2. 任何数异或0,任何数。
+//     3. 任何数异或自己，把自己清零。
+//     4. (n^-1) == ~n
+//     5. -n == ~(n-1) == (~n)+1
 
+// 清除位最右边的1: n = n & (n-1)
+// 获取位最右边的1: n = n & (-n) || n = n & (~(n-1))
 
 int binaryPlus(int a,int b){
     int carry,add;
@@ -128,9 +136,60 @@ int binaryDivide(int a, int b){
     return num;  
 }
 
+void swap(int *a, int *b){
+    *a^=*b;
+    *b^=*a;
+    *a^=*b;
+}
+
+// (n^-1)==~n
+int abs(int n){
+    int f = n >> 31;
+    return (n^f)-f;
+}
+
+int avg(int a, int b){
+    return (a&b)+((a^b)>>1);
+}
+
+int min(int a, int b){
+    return b + ((a-b) & ((a-b)>>31));
+}
+
+int max(int a, int b){
+    return a - ((a-b) & ((a-b)>>31));
+    //return (b&((a-b)>>31)) | (a & (~(a-b)>>31));
+}
+
+int minInt(){
+    return 1<<31;
+}
+
+int maxInt(){
+    return ((unsigned) -1) >> 1;
+    //return (1<<31)-1;
+}
+
+int multiply2M(int n, int m){
+    return n<<m;// n=n*(2^m)
+}
+
+int isOddNumber(int n){
+    return (n&1) == 1;
+}
+
+int isEqual(int a, int b){
+    return (a^b) == 0;
+}
+
+int getBit(int n, int m){
+    return (n>>(m-1)) & 1;
+}
+
 int main(){
 
     int a,b;
+
     cout << "Input int.a:";
     cin >> a;
 
@@ -146,7 +205,20 @@ int main(){
 
     cout << a << "/" << b << "=" << binaryDivide(a,b) << endl;
 
-   
+    swap(&a, &b);
+    cout << "after swaped:" << " a:" << a << " b:" << b << endl;
+  
+    cout << "abs a:" << abs(a) << " b:" << abs(b) << endl;
+
+    cout << "avg ab:" << avg(a, b) << endl;
+
+    cout << "min:" << min(a, b) << " max ab:" << max(a, b) << endl;
+
+    cout << "min int:" << minInt() << " max int:" << maxInt() << endl;
+
+    cout << a << "*(2^3)=" << multiply2M(a, 3) << endl;
+
+    cout << "isOddNumber a:" << isOddNumber(a) << " b:" << isOddNumber(b) << endl;
     return 0;
 }
 
