@@ -162,7 +162,7 @@ int max(int a, int b){
 }
 
 int minInt(){
-    return 1<<31;
+    return -1<<31;
 }
 
 int maxInt(){
