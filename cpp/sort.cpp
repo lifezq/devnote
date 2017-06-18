@@ -43,6 +43,27 @@ void quickSort(int *arr, int low, int high)
     }
 }
 
+bool isOddNumber(int n){
+    return (n&1) == 1;
+}
+void oddEventSort(int *arr, unsigned int len){
+    if(arr==NULL || len<=1) return;
+
+    int *begin=arr;
+    int *end=arr+len-1;
+    while(begin<end){
+        if(isOddNumber(*begin)){
+            begin++;
+        }else if(!isOddNumber(*end)){
+            end--;
+        }else{
+            swap(*begin, *end);
+        }
+    }
+
+    return;
+}
+
 int main(){
 
 
@@ -57,7 +78,12 @@ int main(){
     insertSort(arr,10);
 
     cout << "after sort:--------------" << endl;
-     for(int i=0;i<10;i++) cout << arr[i] << ", ";
+    for(int i=0;i<10;i++) cout << arr[i] << ", ";
+    cout << endl;
+
+    oddEventSort(arr, 10);
+    cout << "after odd sort:--------------" << endl;
+    for(int i=0;i<10;i++) cout << arr[i] << ", ";
     cout << endl;
 
 
