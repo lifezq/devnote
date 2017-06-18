@@ -176,10 +176,10 @@ bool isEqual(int a, int b){
     return ((a|b)&b) == a;
 }
 
-// 查找出现次数超过数组长度一半的数
+// 查找出现次数等于或超过数组长度一半的数
 int findOneNumber(int *arr, int n){
-    int candidate=arr[0], nTimes=1;
-    for(int i=1;i<n;i++){
+    int candidate=arr[0], nTimes=1, i=1;
+    for(i=1;i<n;i++){
         if(candidate!=arr[i]){
             if(nTimes>0){
                 nTimes--;
@@ -191,6 +191,8 @@ int findOneNumber(int *arr, int n){
             nTimes++;
         }
     }
+
+    if(nTimes==0) return arr[--i];
     return candidate;
 }
 
@@ -216,5 +218,7 @@ int main(){
 
     //cout << "====:" << isEqual(10,110) << endl;
 
+    int arr2[4]={0,1,2,1};
+    cout << "findOneNumber:" << findOneNumber(arr2, 4) << endl;
     return 0;
 }
