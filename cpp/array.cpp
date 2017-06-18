@@ -176,6 +176,24 @@ bool isEqual(int a, int b){
     return ((a|b)&b) == a;
 }
 
+// 查找出现次数超过数组长度一半的数
+int findOneNumber(int *arr, int n){
+    int candidate=arr[0], nTimes=1;
+    for(int i=1;i<n;i++){
+        if(candidate!=arr[i]){
+            if(nTimes>0){
+                nTimes--;
+            }else {
+                candidate=arr[i];
+                nTimes=1;
+            }
+        }else{
+            nTimes++;
+        }
+    }
+    return candidate;
+}
+
 int main(){
     int arr[10] = {-20,-18,-15,17,10,16,8,13,5,7};
 
