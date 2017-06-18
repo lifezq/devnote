@@ -178,8 +178,8 @@ bool isEqual(int a, int b){
 
 // 查找出现次数等于或超过数组长度一半的数
 int findOneNumber(int *arr, int n){
-    int candidate=arr[0], nTimes=1, i=1;
-    for(i=1;i<n;i++){
+    int candidate=arr[0], nTimes=1;
+    for(int i=1;i<n;i++){
         if(candidate!=arr[i]){
             if(nTimes>0){
                 nTimes--;
@@ -192,7 +192,7 @@ int findOneNumber(int *arr, int n){
         }
     }
 
-    if(nTimes==0) return arr[--i];
+    if(nTimes==0) return arr[--n];
     return candidate;
 }
 
