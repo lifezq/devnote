@@ -196,6 +196,20 @@ int findOneNumber(int *arr, int n){
     return candidate;
 }
 
+//最大连续乘积子串
+//动态规划求解法
+int maxProductSubstring(int *arr, int n){
+    int maxEnd=arr[0], minEnd=arr[0],maxResult=arr[0];
+    for(int i=1;i<n;i++){
+        int end1=maxEnd*arr[i],end2=minEnd*arr[i];
+        maxEnd=max(max(end1, end2), arr[i]);
+        minEnd=min(min(end1, end2), arr[i]);
+        maxResult=max(maxResult, maxEnd);
+    }
+
+    return maxResult;
+}
+
 int main(){
     int arr[10] = {-20,-18,-15,17,10,16,8,13,5,7};
 
@@ -220,5 +234,7 @@ int main(){
 
     int arr2[4]={0,1,2,1};
     cout << "findOneNumber:" << findOneNumber(arr2, 4) << endl;
+
+    cout << "maxProductSubstring value:" << maxProductSubstring(arr, 10) << endl;
     return 0;
 }
