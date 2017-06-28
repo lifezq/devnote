@@ -14,6 +14,14 @@ int testBigEndin()
         return (test.s==0x01);
 }
 
+int testBigEndin2(){
+    int n=1;
+    if(*(char *)&n == 1){
+        return 0;
+    }
+    return 1;
+}
+
 int main()
 {
         if (testBigEndin())     
