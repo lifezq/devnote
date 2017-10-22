@@ -1,7 +1,6 @@
 //Paginator
 function Pager(curpg, count, perpg, rangelenNum, func, elem) {
 
-
     var paginator = {
         firstPage: 0,
         prevPage: 0,
@@ -18,7 +17,7 @@ function Pager(curpg, count, perpg, rangelenNum, func, elem) {
     if (curpg <= 0) {
         paginator.curpage = 1;
     } else if (curpg > count) {
-        curpg = count;
+        paginator.curpage = count;
     }
 
     if (perpg <= 0) {
@@ -29,7 +28,7 @@ function Pager(curpg, count, perpg, rangelenNum, func, elem) {
         paginator.rangeLenNum = 8;
     }
 
-    paginator.pageNum = Math.ceil(count / perpg);
+    paginator.pageNum = Math.ceil(count / paginator.perpage);
 
     //init var 
     var pageRangeStart,
@@ -38,10 +37,10 @@ function Pager(curpg, count, perpg, rangelenNum, func, elem) {
         prevNum,
         nextNum;
 
-    if (curpg - rangeNumHalf > 0) {
-        if (paginator.pageNum >= (curpg + rangeNumHalf)) {
-            pageRangeStart = curpg - rangeNumHalf;
-            pageRangeEnd = curpg + rangeNumHalf;
+    if (paginator.curpage - rangeNumHalf > 0) {
+        if (paginator.pageNum >= (paginator.curpage + rangeNumHalf)) {
+            pageRangeStart = paginator.curpage - rangeNumHalf;
+            pageRangeEnd = paginator.curpage + rangeNumHalf;
         } else {
             pageRangeStart = paginator.pageNum - rangelenNum + 1;
             pageRangeEnd = paginator.pageNum + 1;
@@ -52,8 +51,8 @@ function Pager(curpg, count, perpg, rangelenNum, func, elem) {
     }
 
     //prev next  page num
-    prevNum = curpg - 1;
-    nextNum = curpg + 1;
+    prevNum = paginator.curpage - 1;
+    nextNum = paginator.curpage + 1;
     if (prevNum > 0) {
         paginator.prevPage = prevNum;
         paginator.firstPage = 1;
