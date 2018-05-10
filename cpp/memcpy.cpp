@@ -23,6 +23,25 @@ void* memcpy(void *dst, const void *src, size_t count){
     return dst;
 }
 
+/*  
+void* memmove(void* dest, void* source, size_t count){
+    void* ret = dest;
+    if(dest <= source || dest >= (source + count)){
+        // copy from lower addresses to higher addresses
+        while(count--)
+            *dest++ = *source++;
+    }else{
+        // copy from higher addresses to lower addresses
+        dest += count-1;
+        source += count -1;
+        while(count--)
+            *dest-- = *source--;
+    }
+
+    return ret;
+}
+*/
+
 int main(){
 
     
