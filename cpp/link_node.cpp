@@ -52,6 +52,21 @@ LinkNode reverseNode(LinkNode head){
     return head;
 }
 
+LinkNode reverse(LinkNode head){
+
+        if(head == NULL || head->next == NULL) return head;
+        LinkNode p=head, newH=NULL;
+        while(p!=NULL){
+                LinkNode tmp=p->next;//暂存p下一个地址，防止变化指针后找不到后续的数
+                p->next=newH;//p->next指向前一个空间
+                newH=p;//新链表的头移动到p，扩长一步链表
+                p=tmp;//p指向原始链表p指向的下一个空间
+
+        }
+
+        return newH;
+}
+
 void traverseNode(LinkNode n){
     if(n ==NULL) return;
 
@@ -74,6 +89,6 @@ int main(){
 
     cout << "--------------------------------" << endl;
 
-    traverseNode(reverseNode(n));
+    traverseNode(reverse(n));
     return 0;
 }
