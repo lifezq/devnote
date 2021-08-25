@@ -8,7 +8,15 @@ class TreeNode {
 
     public static void main(String[] args) {
         buildTree();
-        middleTraversal2(node);
+        inOrderTraversal2(node);
+        System.out.println("\n----------------------");
+        middleTraversal(node);
+        System.out.println("\n----------------------");
+
+        preOrderTraversal(node);
+        System.out.println("\n----------------------");
+
+        postOrderTraversal(node);
         System.out.println("\n----------------------");
     }
 
@@ -38,13 +46,14 @@ class TreeNode {
         middleTraversal(n.right);
     }
 
-    public static void middleTraversal2(Node n) {
+    public static void inOrderTraversal2(Node n) {
         if (n == null) {
             return;
         }
 
         List<Integer> vals = new ArrayList<>();
         Stack<Node> s = new Stack<>();
+        //依次遍历左节点，将左节点弹出，接着上节点，顺序：左-->上-->右
         while (n != null || !s.isEmpty()) {
             while (n != null) {
                 s.push(n);
@@ -63,8 +72,66 @@ class TreeNode {
         });
     }
 
-    public static void prevTraversal(Node n) {
+    public static void preOrderTraversal(Node n) {
+        if (n == null) {
+            return;
+        }
 
+        List<Integer> vals = new ArrayList<>();
+        Stack<Node> s = new Stack<>();
+        s.add(n);
+        while (!s.isEmpty()) {
+
+            // 先弹出根节点，向左依次弹出左节点， 顺序 上-->左-->右
+            n = s.pop();
+            vals.add(n.data);
+
+            if (n.right != null) {
+                s.add(n.right);
+            }
+
+            if (n.left != null) {
+                s.add(n.left);
+            }
+        }
+
+        vals.forEach(x -> {
+            System.out.print(x + "-");
+        });
+    }
+
+    public static void postOrderTraversal(Node n) {
+        if (n == null) {
+            return;
+        }
+
+        List<Integer> vals = new ArrayList<>();
+        Stack<Node> s = new Stack<>();
+        Node pre = null;
+        s.add(n);
+        while (!s.isEmpty()) {
+            n = s.peek();
+            //叶节点出栈，或者当前节点为之前弹出节点父节点时出栈， 顺序 左-->右-->上
+            if (n.left == null && n.right == null ||
+                    (pre != null && (pre == n.left || pre == n.right))) {
+                vals.add(n.data);
+                s.pop();
+                pre = n;
+            } else {
+
+                if (n.right != null) {
+                    s.add(n.right);
+                }
+
+                if (n.left != null) {
+                    s.add(n.left);
+                }
+            }
+        }
+
+        vals.forEach(x -> {
+            System.out.print(x + "-");
+        });
     }
 
     static class Node {

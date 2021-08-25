@@ -2,4 +2,4 @@
 *.s
 
 .idea
-.class
+*.class
