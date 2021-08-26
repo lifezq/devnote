@@ -24,6 +24,11 @@ class TreeNode {
         getKM(node, 3, 2);
 
         levelTraversal(node);
+
+
+        Node rn = reverse(node);
+        System.out.println("\n反转二叉树后，逐层遍历：");
+        levelTraversal(rn);
     }
 
     /*
@@ -210,6 +215,27 @@ class TreeNode {
             }
             idx++;
         }
+    }
+
+    public static Node reverse(Node n) {
+
+        if (n == null) {
+            return null;
+        }
+
+        Node temp = n.left;
+        n.left = n.right;
+        n.right = temp;
+
+        if (n.left != null) {
+            n.left = reverse(n.left);
+        }
+
+        if (n.right != null) {
+            n.right = reverse(n.right);
+        }
+
+        return n;
     }
 
     static class Node {
