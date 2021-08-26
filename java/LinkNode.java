@@ -14,6 +14,11 @@ public class LinkNode {
         Node n2 = reverseKM(node, 2, 4);
         System.out.println("链表中间反转后遍历：");
         traversal(n2);
+
+        build();
+        Node n3 = merge(node, n2);
+        System.out.println("链表合并后遍历：");
+        traversal(n3);
     }
 
     public static void build() {
@@ -81,6 +86,24 @@ public class LinkNode {
 
         temp.next = headNode;
 
+        return head;
+    }
+
+    public static Node merge(Node n1, Node n2) {
+        Node head = n1;
+        if (n1 == null) {
+            return n2;
+        }
+
+        if (n2 == null) {
+            return n1;
+        }
+
+        while (n1.next != null) {
+            n1 = n1.next;
+        }
+
+        n1.next = n2;
         return head;
     }
 
