@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 class TreeNode {
 
@@ -18,6 +20,10 @@ class TreeNode {
 
         postOrderTraversal(node);
         System.out.println("\n----------------------");
+
+        getKM(node, 3, 2);
+
+        levelTraversal(node);
     }
 
     /*
@@ -132,6 +138,78 @@ class TreeNode {
         vals.forEach(x -> {
             System.out.print(x + "-");
         });
+    }
+
+    public static void levelTraversal(Node n) {
+        Queue<Node> q = new LinkedBlockingQueue<>();
+        q.add(n);
+
+        System.out.println("逐层遍历二叉树：");
+        while (!q.isEmpty()) {
+            int sz = q.size();
+
+            System.out.println("");
+            for (int i = 0; i < sz; i++) {
+                n = q.poll();
+                System.out.print(n.data + "-");
+
+                if (n.left != null) {
+                    q.add(n.left);
+                }
+
+                if (n.right != null) {
+                    q.add(n.right);
+                }
+            }
+        }
+    }
+
+    //获取二叉树第k层倒数第m个元素
+    public static void getKM(Node n, int k, int m) {
+        Queue<Node> q = new LinkedBlockingQueue<>();
+        q.add(n);
+        int level = 1;
+        List<Integer> vals = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
+                n = q.poll();
+
+                if (k == level) {
+                    vals.add(n.data);
+                }
+
+                if (n.left != null) {
+                    q.add(n.left);
+                }
+
+                if (n.right != null) {
+                    q.add(n.right);
+                }
+            }
+
+            if (level >= k) {
+                break;
+            }
+
+            level++;
+        }
+
+        System.out.print("第[" + k + "]层元素为:");
+        vals.forEach(x -> {
+            System.out.print(x + "-");
+        });
+
+        System.out.println("\n----------------------");
+
+        int idx = 1;
+        for (int j = vals.size() - 1; j >= 0; j--) {
+            if (idx == m) {
+                System.out.println("元素为：" + vals.get(j));
+                return;
+            }
+            idx++;
+        }
     }
 
     static class Node {
