@@ -3,3 +3,9 @@
 
 .idea
 *.class
+
+# eclipse
+.classpath
+.project
+devnote.iml
+out

@@ -42,13 +42,13 @@ func TestRpc(t *testing.T) {
 	rpc.HandleHTTP()
 	l, e := net.Listen("tcp", ":1234")
 	if e != nil {
-		t.Fatalf("listen error:", e)
+		t.Fatalf("listen error:%v", e)
 	}
 	go http.Serve(l, nil)
 
 	client, err := rpc.DialHTTP("tcp", ":1234")
 	if err != nil {
-		t.Fatalf("dialing:", err)
+		t.Fatalf("dialing:%v", err)
 	}
 
 	// Synchronous call
@@ -56,7 +56,7 @@ func TestRpc(t *testing.T) {
 	var reply int
 	err = client.Call("Arith.Multiply", args, &reply)
 	if err != nil {
-		t.Fatalf("arith error:", err)
+		t.Fatalf("arith error:%v", err)
 	}
 
 	t.Logf("Arith: %d*%d=%d\n", args.A, args.B, reply)
